@@ -2,7 +2,7 @@
     ModernX by zydezu
     (https://github.com/zydezu/ModernX)
 
-    This script is a result of the original mpv-osc-modern by maoiscat 
+    This script is a result of the original mpv-osc-modern by maoiscat
     and it's subsequent forks:
     * cyl0/ModernX
     * dexeonify/ModernX
@@ -92,7 +92,7 @@ local user_opts = {
     seek_resets_hide_timeout = true,        -- if seeking should reset the hide_timeout
     fade_duration = 150,                    -- fade-out duration (in ms), set to 0 for no fade
     min_mouse_move = 0,                     -- minimum mouse movement (in pixels) required to show OSC
-    bottom_hover = true,                    -- show OSC only when hovering at the bottom
+    bottom_hover = false,                    -- show OSC only when hovering at the bottom
     bottom_hover_zone = 200,                -- height of hover zone for bottom_hover (in pixels)
     osc_on_seek = false,                    -- show OSC when seeking
     mouse_seek_pause = true,                -- pause video while seeking with mouse move (on button hold)
@@ -119,7 +119,7 @@ local user_opts = {
     time_font_size = 18,                    -- font size of the time display
 
     show_description = true,                -- show video description - description on web videos or metadata/stats on local video
-    show_file_size = true,                  -- show the current file's size in the description
+    show_file_size = false,                  -- show the current file's size in the description
     description_font_size = 19,             -- font size of the description text (below title)
     description_alpha = 100,                -- alpha of the description background box
     scrolling_speed = 40,                   -- the speed of scrolling text in description/comment menus
@@ -154,14 +154,14 @@ local user_opts = {
 
     info_button = false,                    -- show info button
     ontop_button = true,                    -- show window on top button
-    screenshot_button = false,              -- show screenshot button
-    screenshot_flag = "subtitles",          -- flag for screenshot button: "subtitles", "video", "window", "each-frame" 
+    screenshot_button = true,              -- show screenshot button
+    screenshot_flag = "subtitles",          -- flag for screenshot button: "subtitles", "video", "window", "each-frame"
                                             -- https://mpv.io/manual/master/#command-interface-screenshot-%3Cflags%3E
 
     download_button = true,                 -- show download button on web videos (requires yt-dlp and ffmpeg)
     download_path = "~~desktop/mpv/downloads", -- default download directory for videos (https://mpv.io/manual/master/#paths)
 
-    loop_button = false,                    -- show loop button
+    loop_button = true,                    -- show loop button
     loop_in_pause = true,                   -- enable looping by right-clicking pause
 
     playpause_size = 30,                    -- icon size for the play/pause button
@@ -227,9 +227,9 @@ local user_opts = {
     add_sponsorblock_chapters = false,      -- add sponsorblock chapters to the chapter list
     sponsorblock_seek_range_alpha = 75,     -- transparency of sponsorblock segments
     sponsor_types = {                       -- what categories to show in the progress bar
-        "sponsor",                          -- all categories: 
-        "intro",                            --      sponsor, intro, outro, 
-        "outro",                            --      interaction, selfpromo, preview, 
+        "sponsor",                          -- all categories:
+        "intro",                            --      sponsor, intro, outro,
+        "outro",                            --      interaction, selfpromo, preview,
         "interaction",                      --      music_offtopic, filler
         "selfpromo",
         "preview",
@@ -294,7 +294,7 @@ local icons = {
         [5] = {"\238\171\186", "\238\171\187"},
         [10] = {"\238\171\188", "\238\172\129"},
         [30] = {"\238\172\133", "\238\172\134"},
-        default = {"\238\172\138", "\238\172\138"}, -- second icon is mirrored in layout() 
+        default = {"\238\172\138", "\238\172\138"}, -- second icon is mirrored in layout()
     },
 
     emoticon = {
@@ -1036,7 +1036,7 @@ local function draw_seekbar_progress(element, elem_ass)
     elem_ass:rect_cw(0, slider_lo.gap, xp, elem_geo.h - slider_lo.gap)
 end
 
--- Draws seekbar ranges according to user_opts 
+-- Draws seekbar ranges according to user_opts
 local function draw_seekbar_ranges(element, elem_ass, xp, rh, override_alpha)
     local handle = xp and rh
     xp = xp or 0
@@ -1954,7 +1954,7 @@ function process_vid_stats(success, result, error)
     if not state.ytdescription then
         if mp.get_property_number("estimated-vf-fps") then
             state.videoDescription = mp.get_property("width") .. "x" .. mp.get_property("height") .. " | FPS: " ..
-            (math.floor(mp.get_property_number("estimated-vf-fps") + 0.5) or "") -- can't get a normal description, display something else    
+            (math.floor(mp.get_property_number("estimated-vf-fps") + 0.5) or "") -- can't get a normal description, display something else
         end
     end
 
@@ -3287,7 +3287,7 @@ local function osc_init()
             if compact_mode then
                 mp.commandv("add", "chapter", 1)
                 show_message(get_chapterlist())
-                show_message(get_chapterlist()) -- run twice as it might show the wrong chapter without another function    
+                show_message(get_chapterlist()) -- run twice as it might show the wrong chapter without another function
             else
                 show_message(get_chapterlist())
             end
